@@ -20,6 +20,7 @@ Here's a step-by-step tutorial on how to create a GitHub account, create a repos
 
 1. If you have Homebrew installed, you can run: `brew install git`
 2. If not, you can download the Git installer for macOS from the [Git website](https://git-scm.com/download/mac).
+3. `git config --global user.email "email@example.com"` change to your email address.
 
 #### For Linux:
 
@@ -160,8 +161,8 @@ Connecting to a high-performance cluster (like your FARM) and setting up GitHub 
      #!/bin/bash
 
      rm -rf github
-     git clone git@github.com:USERNAME/REPO.git
-     mv tajima github
+     git clone git@github.com:[USERNAME]/[REPO].git
+     mv [REPO] github
      chmod u+x github/code/*
      ```
 
