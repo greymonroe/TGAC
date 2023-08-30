@@ -174,3 +174,36 @@ Connecting to a high-performance cluster (like your FARM) and setting up GitHub 
    - Run the command: `chmod +x clone_github.sh`
 
 Now, whenever you want to quickly update your code on the FARM, you can run the `./clone_github.sh` script. This will remove the old `github` directory, clone the repository from GitHub, rename the cloned directory to `github`, and make all the code files inside `github/code/` executable.
+
+### Troubleshooting:
+Some people have had trouble with getting VSCode to behave with git when pushing changes. 
+From @Daniela: 
+this is what worked for me : If you already have an `id_rsa` file that you're using for another purpose, you have a few options:
+### Option 1: Use Existing Key for GitHub (Not Recommended for Security Reasons)
+You can use the existing `id_rsa` key for GitHub as well, but it's generally not recommended to reuse SSH keys across multiple services for security reasons.
+### Option 2: Generate a New SSH Key with a Different Name
+You can generate a new key and specify a different name for it. For example:
+```bash
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f ~/.ssh/id_rsa_github
+```
+This will create a new key and save it to `~/.ssh/id_rsa_github`.
+#### Update SSH Config
+Once you have multiple SSH keys, you'll need to tell SSH when to use which key. You can do this by creating or editing an SSH config file:
+1. Open the SSH config file in a text editor. You might need to create this file if it doesn't already exist:
+    ```bash
+    nano ~/.ssh/config
+    ```
+    Or you can use another text editor if you prefer.
+2. Add an entry for GitHub. If you're using a different key just for GitHub, you can specify it like this:
+    ```bash
+    Host github.com
+      IdentityFile ~/.ssh/id_rsa_github
+    ```
+After doing this, the SSH client will use the key located at `~/.ssh/id_rsa_github` when connecting to GitHub.
+#### Add New SSH Key to GitHub and SSH Agent
+After generating the new key, don't forget to add it to your GitHub account and SSH agent:
+- Add the new key to GitHub as you would normally (Settings → SSH and GPG keys → New SSH key).
+- Add the new key to your SSH agent:
+    ```bash
+    ssh-add ~/.ssh/id_rsa_github
+    ```
